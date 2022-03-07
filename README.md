@@ -8,7 +8,7 @@ Readme for TensorFlow exercises
                                   So it is neccesary to try someother technique.
  \
  \
- *keras_mnist_fashion_overfit_timeDecay.py* - MNIst Fashion with inverse time deay of learning rate.\
+ *keras_mnist_fashion_overfit_timeDecay.py* - MNIIST Fashion with inverse time deay of learning rate.\
                                               We will see it does not work even for a single hidden layer network.\
-                                              Some plotting is also done to familiarize with plotting using the *History* object.\
+                                              Some plotting is also done to familiarize with plotting using the *History* object.
                     
