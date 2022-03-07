@@ -1,12 +1,16 @@
 import tensorflow as tf 
 print("tensorFlow version :",tf.__version__)
 
+
 import numpy as np
 import matplotlib.pyplot as plt
 
 fashion_mnist = tf.keras.datasets.fashion_mnist                                                                   #Invoking module fasion_mnist 
 
-(train_images, train_labels), (test_images, test_labels) = fashion_mnist.load_data()                             
+(train_images, train_labels), (test_images, test_labels) = fashion_mnist.load_data() 
+temp = np.array(train_labels)
+no_of_datapoints=np.size(temp) 
+print(no_of_datapoints)                           
 
 class_names = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat', 'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot']
 
@@ -45,36 +49,138 @@ for i in range(25):
     plt.xlabel(class_names[train_labels[i]])
 plt.show()
 '''
-#Building the Model
-''' The actual layers of neurons are built here
+##############################################################################
+'''Building the Model
+ The actual layers of neurons are built here
 '''
+##############################################################################
 model = tf.keras.Sequential([
     tf.keras.layers.Flatten(input_shape=(28, 28)),
     tf.keras.layers.Dense(128, activation='relu'),
     tf.keras.layers.Dense(10)
 ])
 
-#Specifying the parameters of the model
-'''Parameters such as Loss function, Optimizer and Metrics are specified here
+
+
+
+
+
+
+
+
+
+#################################################################################################################
+'''This is the part where I have introduced decay of the learning rate with time
+tf.keras.optimizers.schedule can be used to reduce the learning rate gradually during training'''
+#################################################################################################################
+
+lr_schedule = tf.keras.optimizers.schedules.InverseTimeDecay(
+	initial_learning_rate=0.001, decay_steps=no_of_datapoints, decay_rate=0.5,staircase=False)
+optimizer = tf.keras.optimizers.Adam(lr_schedule)
+
+
+
+
+
+
+
+
+
+###########################################
+'''Plotting Runs vs Learning rate Graph'''
+###########################################
+
+x_axis = no_of_datapoints*20
+step=np.linspace(0.001,x_axis)
+lr=lr_schedule(step)
+plt.figure(figsize = (8,6))
+plt.plot(step,lr)
+plt.ylim([0,max(plt.ylim())])
+plt.xlim([0,max(plt.xlim())])
+plt.xlabel('Runs')
+plt.ylabel('Learning Rate')
+
+
+
+
+
+
+
+
+
+
+###########################################################################
+'''Specifying the parameters of the model
+Parameters such as Loss function, Optimizer and Metrics are specified here
 '''
-model.compile(optimizer='adam',
+###########################################################################
+
+model.compile(optimizer=optimizer,
               loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
-              metrics=['accuracy'])
+              metrics=[tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True,name='Sparse_Categorical_Crossentropy'),'accuracy'])
 
-#Training the Network
-'''The data to be used to train is fed here
-'''
-model.fit(train_images, train_labels, epochs=10)
 
-#Accuracy Evaluation
-''' The loss is reduced and the accuracy is calculated (I would rather call it "fit" than accuracy)
+
+
+
+
+
+###########################################################################
+'''Training the Network
+The data to be used to train is fed here'''
+###########################################################################
+
+hist = model.fit(train_images, train_labels, epochs=20)
+
+print(hist.params)
+
+print(hist.history.keys())
+
+Sparse_Categorical_Crossentropy=hist.history['Sparse_Categorical_Crossentropy']
+
+
+step=np.arange(1,21)
+print (step)
+
+plt.figure(figsize = (8,6))
+plt.plot(step,Sparse_Categorical_Crossentropy)
+a = plt.xscale('log') #Log scale. Change it if required
+plt.xlim([0,max(plt.xlim())])
+plt.xlabel('Runs')
+plt.ylabel('Sparse_Categorical_Crossentropy')
+
+
+
+
+###########################################################################
+'''Accuracy Evaluation
+ The loss is reduced and the accuracy is calculated (I would rather call it "fit" than accuracy)
 	But it has to be tested with new data
 	Remember it is this analysis which makes the model valid
 '''
+###########################################################################
 
-test_loss, test_acc = model.evaluate(test_images, test_labels, verbose = 2)
+test_loss, Sparse_Categorical_Crossentropy ,test_acc = model.evaluate(test_images,  test_labels, verbose=2)
 print('\nTest Accuracy:', test_acc)
 print('\nTest Loss:', test_loss)
+print('\nSparse_Categorical_Crossentropy:', Sparse_Categorical_Crossentropy)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #Predicting using the model
 '''The final output comes as a vactor for every training data point
