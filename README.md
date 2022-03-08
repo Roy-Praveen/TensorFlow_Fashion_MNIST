@@ -11,4 +11,9 @@ Readme for TensorFlow exercises
  *keras_mnist_fashion_overfit_timeDecay.py* - MNIIST Fashion with inverse time deay of learning rate.\
                                               We will see it does not work even for a single hidden layer network.\
                                               Some plotting is also done to familiarize with plotting using the *History* object.
+ \
+ \
+ *keras_mnist_fashion_overfit_colved.py* - L2 Regularization was used to see if the overfitting problem was solvable.\
+                                           Though the overfitting to data redusced the accuracy with respect to test images is lower than withou regularization.\
+                                           So as a next step, L2 + dropout was used.
                     
