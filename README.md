@@ -1,4 +1,4 @@
-# TensorFlow_Exercises
+# TensorFlow_Fashion_MNIST
 Readme for TensorFlow exercises
 
 ## Program List with Description
