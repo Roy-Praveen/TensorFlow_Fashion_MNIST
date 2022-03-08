@@ -13,7 +13,7 @@ Readme for TensorFlow exercises
                                               Some plotting is also done to familiarize with plotting using the *History* object.
  \
  \
- *keras_mnist_fashion_overfit_colved.py* - L2 Regularization was used to see if the overfitting problem was solvable.\
+ *keras_mnist_fashion_overfit_solved.py* - L2 Regularization was used to see if the overfitting problem was solvable.\
                                            Though the overfitting to data redusced the accuracy with respect to test images is lower than withou regularization.\
                                            So as a next step, L2 + dropout was used.
                     
