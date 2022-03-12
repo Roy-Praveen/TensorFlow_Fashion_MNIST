@@ -14,7 +14,9 @@ Readme for TensorFlow exercises
  \
  \
  *keras_mnist_fashion_overfit_solved.py* - L2 Regularization was used to see if the overfitting problem was solvable.\
-                                           Though the overfitting to data redusced the accuracy with respect to test images is lower than withou regularization.\
+                                           Though the overfitting to training data redusced, the accuracy with respect to test images continues to remains lower                                                than the accuracy with respect to the training images.\
+                                           If we had had more layers of neurons with more neurons L2 regularization might have been enough.\
+                                           Nevertheless, we are going to include dropout also.\
                                            So as a next step, L2 + dropout was used.
                                            
  *Apart from this another technique one could use more layers of neurons with regularization and check its performance.*
