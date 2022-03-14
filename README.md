@@ -17,7 +17,8 @@ Readme for TensorFlow exercises
                                            Though the overfitting to training data redusced, the accuracy with respect to test images continues to remains lower                                                than the accuracy with respect to the training images.\
                                            If we had had more layers of neurons with more neurons L2 regularization might have been enough.\
                                            Nevertheless, we are going to include dropout also.\
-                                           So as a next step, L2 + dropout was used.
+                                           So as a next step, L2 + dropout was used.\
+                                           The difference in performance between the different implementations can be clearly seen.\
                                            
  *Apart from this another technique one could use more layers of neurons with regularization and check its performance.*
                     
