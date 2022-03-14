@@ -68,7 +68,22 @@ model2 = tf.keras.Sequential([
 ])
 
 
+model3 = tf.keras.Sequential([
+    tf.keras.layers.Flatten(input_shape=(28, 28)),
+    tf.keras.layers.Dropout(0.5),
+    tf.keras.layers.Dense(128, activation='relu'),
+    tf.keras.layers.Dropout(0.5),
+    tf.keras.layers.Dense(10)
+])
 
+
+model4 = tf.keras.Sequential([
+    tf.keras.layers.Flatten(input_shape=(28, 28),activity_regularizer=tf.keras.regularizers.L2(0.001)),
+    tf.keras.layers.Dropout(0.5),
+    tf.keras.layers.Dense(128, activation='relu',kernel_regularizer=tf.keras.regularizers.L2(0.001)),
+    tf.keras.layers.Dropout(0.5),
+    tf.keras.layers.Dense(10)
+])
 
 
 
@@ -129,6 +144,14 @@ model2.compile(optimizer=optimizer,
               loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
               metrics=[tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True,name='Sparse_Categorical_Crossentropy2'),'accuracy'])
 
+model3.compile(optimizer=optimizer,
+              loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+              metrics=[tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True,name='Sparse_Categorical_Crossentropy3'),'accuracy'])
+
+model4.compile(optimizer=optimizer,
+              loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+              metrics=[tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True,name='Sparse_Categorical_Crossentropy4'),'accuracy'])
+
 
 
 
@@ -169,6 +192,32 @@ print('\nTest Accuracy (L2 regularization):', test_acc)
 print('\nTest Loss (L2 regularization):', test_loss)
 print('\nSparse_Categorical_Crossentropy (L2 regularization):', Sparse_Categorical_Crossentropy)
 
+#Model3#
+hist3 = model3.fit(train_images, train_labels, epochs=20)
+#print(hist3.params)
+#print(hist3.history.keys())
+
+Sparse_Categorical_Crossentropy3=hist3.history['Sparse_Categorical_Crossentropy3']
+
+print("The Third Model has been fit with dropout layers")
+test_loss, Sparse_Categorical_Crossentropy, test_acc = model3.evaluate(test_images,  test_labels, verbose=2)
+print('\nTest Accuracy (with Dropout):', test_acc)
+print('\nTest Loss (with Dropout):', test_loss)
+print('\nSparse_Categorical_Crossentropy (with Dropout):', Sparse_Categorical_Crossentropy)
+
+#Model4#
+hist4 = model4.fit(train_images, train_labels, epochs=20)
+#print(hist4.params)
+#print(hist4.history.keys())
+
+Sparse_Categorical_Crossentropy4=hist4.history['Sparse_Categorical_Crossentropy4']
+
+print("The Third Model has been fit with dropout layers")
+test_loss, Sparse_Categorical_Crossentropy, test_acc = model4.evaluate(test_images,  test_labels, verbose=2)
+print('\nTest Accuracy (with Dropout+L2):', test_acc)
+print('\nTest Loss (with Dropout+L2):', test_loss)
+print('\nSparse_Categorical_Crossentropy (with Dropout+L2):', Sparse_Categorical_Crossentropy)
+
 
 
 
@@ -181,6 +230,8 @@ step=np.arange(1,21)
 fig,ax=plt.subplots()
 ax.plot(step,Sparse_Categorical_Crossentropy1,label="Without Regularization")
 ax.plot(step,Sparse_Categorical_Crossentropy2,label="With L2 Regularization")
+ax.plot(step,Sparse_Categorical_Crossentropy3,label="With Dropout")
+ax.plot(step,Sparse_Categorical_Crossentropy4,label="With L2 Regularization + Dropout")
 legend=ax.legend(loc='upper right')
 legend.get_frame().set_facecolor('#00FFCC')
 plt.xlabel('Runs')
