@@ -18,7 +18,7 @@ Readme for TensorFlow exercises
                                            If we had had more layers of neurons with more neurons L2 regularization might have been enough.\
                                            Nevertheless, we are going to include dropout also.\
                                            So as a next step, L2 + dropout was used.\
-                                           The difference in performance between the different implementations can be clearly seen.\
+                                           The difference in performance between the different implementations can be clearly seen.
                                            
  *Apart from this another technique one could use more layers of neurons with regularization and check its performance.*
                     
